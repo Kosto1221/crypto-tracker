@@ -16,10 +16,11 @@ interface IHistoricalData {
 
 interface CharProps {
   coinId: string;
+  isDark: boolean;
 }
 
 function Chart() {
-  const { coinId } = useOutletContext<CharProps>();
+  const { coinId, isDark } = useOutletContext<CharProps>();
   const { isLoading, data } = useQuery<IHistoricalData[]>({
     queryKey: ["ohlcv", coinId],
     queryFn: () => fetchCoinHistory(coinId),
@@ -39,7 +40,7 @@ function Chart() {
             },
           ]}
           options={{
-            theme: { mode: "dark" },
+            theme: { mode: isDark ? "dark" : "light" },
             chart: {
               height: 300,
               width: 500,
